@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Profile | Student ID</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --secondary: #666666;
+            --border: #eeeeee;
+            --mono: 'SF Mono', 'Fira Code', 'Menlo', monospace;
+            --sans: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: var(--sans);
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .dots-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
+            background-size: 32px 32px;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 100px 30px;
+        }
+
+        header { margin-bottom: 80px; }
+
+        .tag-lab {
+            font-family: var(--mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: #000;
+            color: #fff;
+            padding: 4px 12px;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: clamp(32px, 8vw, 56px);
+            font-weight: 500;
+            letter-spacing: -2px;
+            margin: 0;
+            line-height: 0.9;
+            min-height: 1.1em;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 12px;
+            height: 0.8em;
+            background-color: #000;
+            margin-left: 5px;
+            vertical-align: middle;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .description {
+            font-size: 20px;
+            color: var(--secondary);
+            margin-top: 30px;
+            max-width: 650px;
+            line-height: 1.4;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 1.2s;
+        }
+
+        section {
+            margin-bottom: 60px;
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 1.8s;
+        }
+
+        .label {
+            font-family: var(--mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-bottom: 30px;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .info-item h3 {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 10px 0;
+        }
+
+        .info-item p { font-size: 16px; color: var(--secondary); margin: 0; }
+
+        .about-text {
+            font-size: 16px;
+            color: var(--secondary);
+            max-width: 700px;
+        }
+
+        .interest-list { display: flex; flex-wrap: wrap; gap: 8px; }
+
+        .interest-tag {
+            font-family: var(--mono);
+            font-size: 12px;
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            background: #fafafa;
+        }
+
+        .links { display: flex; gap: 24px; margin-top: 40px; flex-wrap: wrap; }
+
+        .links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: var(--mono);
+            border-bottom: 1px solid var(--border);
+            transition: 0.2s;
+        }
+
+        .links a:hover { border-bottom-color: var(--text); }
+
+        .work-link {
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border-bottom: none !important;
+        }
+
+        .work-link:hover {
+            background: #000 !important;
+            color: #fff !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 60px 20px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .links { flex-direction: column; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dots-bg"></div>
+
+    <div class="container">
+        <header>
+            <div class="tag-lab">Student / Developer Profile</div>
+            <h1 id="typewriter"></h1>
+            <p class="description">9th-grade student. Combining school studies with deep exploration of web development and programming.</p>
+        </header>
+
+        <section>
+            <span class="label">About Me</span>
+            <div class="about-text">
+                <p>I am passionate about building digital products and solving complex problems through code. My journey began with curiosity about how websites work and evolved into a daily pursuit of modern technologies. I believe that mathematical thinking and programming are powerful tools capable of changing the world.</p>
+            </div>
+        </section>
+
+        <section>
+            <span class="label">Academic Info</span>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Education</h3>
+                    <p>173 lyceum. 9th grade student.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Currently in</h3>
+                    <p>Almaty, Kazakhstan</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <span class="label">Academic Interests</span>
+            <div class="interest-list">
+                 <span class="interest-tag">Math</span>
+                 <span class="interest-tag">Programming</span>
+                 <span class="interest-tag">Web Development</span>
+                <span class="interest-tag">Computer Science</span>
+            </div>
+        </section>
+
+        <section>
+            <span class="label">Personal Terminal</span>
+            <div class="links">
+                <a href="https://nurlydev.github.io/opentowork/" class="work-link">Visit: NurlyDev ↗</a>
+                <a href="https://www.instagram.com/kindqazaq/" target="_blank">Instagram</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const text = "Nurlygazy Omar";
+        const speed = 100;
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            } else {
+                document.getElementById("typewriter").innerHTML += '<span class="cursor"></span>';
+            }
+        }
+
+        window.onload = typeWriter;
+    </script>
+
+</body>
+</html>
