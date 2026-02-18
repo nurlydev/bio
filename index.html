@@ -1,250 +1,388 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Profile | Student ID</title>
-    <style>
-        :root {
-            --bg: #ffffff;
-            --text: #000000;
-            --secondary: #666666;
-            --border: #eeeeee;
-            --mono: 'SF Mono', 'Fira Code', 'Menlo', monospace;
-            --sans: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nurly — Student & Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        * { box-sizing: border-box; }
+  :root {
+    --bg: #ffffff;
+    --text: #0a0a0a;
+    --muted: #999999;
+    --border: #e0e0e0;
+    --term-bg: #0a0a0a;
+    --term-text: #ffffff;
+    --term-muted: #666666;
+    --term-green: #22c55e;
+  }
 
-        body {
-            margin: 0;
-            font-family: var(--sans);
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
+  html { scroll-behavior: smooth; }
 
-        .dots-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
-            background-size: 32px 32px;
-            z-index: -1;
-        }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
 
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
-            padding: 100px 30px;
-        }
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+  }
 
-        header { margin-bottom: 80px; }
+  /* ── LEFT ── */
+  .left {
+    padding: 64px 56px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.05s forwards;
+  }
 
-        .tag-lab {
-            font-family: var(--mono);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: #000;
-            color: #fff;
-            padding: 4px 12px;
-            display: inline-block;
-            margin-bottom: 30px;
-        }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+    display: block;
+  }
 
-        h1 {
-            font-size: clamp(32px, 8vw, 56px);
-            font-weight: 500;
-            letter-spacing: -2px;
-            margin: 0;
-            line-height: 0.9;
-            min-height: 1.1em;
-        }
+  h1 {
+    font-size: clamp(2.2rem, 3.6vw, 3.4rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
 
-        .cursor {
-            display: inline-block;
-            width: 12px;
-            height: 0.8em;
-            background-color: #000;
-            margin-left: 5px;
-            vertical-align: middle;
-            animation: blink 1s infinite;
-        }
+  h1 span {
+    display: block;
+    color: var(--muted);
+    font-weight: 300;
+  }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
+  .description {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 300px;
+    margin-bottom: 44px;
+  }
 
-        .description {
-            font-size: 20px;
-            color: var(--secondary);
-            margin-top: 30px;
-            max-width: 650px;
-            line-height: 1.4;
-            opacity: 0;
-            animation: fadeIn 1s forwards;
-            animation-delay: 1.2s;
-        }
+  .links { display: flex; flex-direction: column; }
 
-        section {
-            margin-bottom: 60px;
-            border-top: 1px solid var(--border);
-            padding-top: 40px;
-            opacity: 0;
-            animation: fadeIn 1s forwards;
-            animation-delay: 1.8s;
-        }
+  .link-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: padding-left 0.22s ease;
+  }
 
-        .label {
-            font-family: var(--mono);
-            font-size: 10px;
-            text-transform: uppercase;
-            color: var(--secondary);
-            margin-bottom: 30px;
-            display: block;
-            letter-spacing: 1px;
-        }
+  .link-item:last-child { border-bottom: 1px solid var(--border); }
+  .link-item:hover { padding-left: 8px; }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
+  .link-arrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .link-item:hover .link-arrow { color: var(--text); }
 
-        .info-item h3 {
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 0 0 10px 0;
-        }
+  .left-bottom {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
 
-        .info-item p { font-size: 16px; color: var(--secondary); margin: 0; }
+  /* ── RIGHT ── */
+  .right {
+    padding: 64px 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 52px;
+  }
 
-        .about-text {
-            font-size: 16px;
-            color: var(--secondary);
-            max-width: 700px;
-        }
+  .right > * {
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards;
+  }
+  .right > *:nth-child(1) { animation-delay: 0.15s; }
+  .right > *:nth-child(2) { animation-delay: 0.22s; }
+  .right > *:nth-child(3) { animation-delay: 0.30s; }
+  .right > *:nth-child(4) { animation-delay: 0.38s; }
 
-        .interest-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+    display: block;
+  }
 
-        .interest-tag {
-            font-family: var(--mono);
-            font-size: 12px;
-            border: 1px solid var(--border);
-            padding: 5px 12px;
-            background: #fafafa;
-        }
+  p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.85;
+  }
 
-        .links { display: flex; gap: 24px; margin-top: 40px; flex-wrap: wrap; }
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+  }
 
-        .links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            font-family: var(--mono);
-            border-bottom: 1px solid var(--border);
-            transition: 0.2s;
-        }
+  /* ── INTERESTS ── */
+  .interests {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
 
-        .links a:hover { border-bottom-color: var(--text); }
+  .interest-cell {
+    background: var(--bg);
+    padding: 20px 22px;
+    transition: background 0.18s;
+    cursor: default;
+  }
 
-        .work-link {
-            background: #f0f0f0;
-            padding: 4px 10px;
-            border-radius: 4px;
-            border-bottom: none !important;
-        }
+  .interest-cell:hover { background: #f8f8f8; }
 
-        .work-link:hover {
-            background: #000 !important;
-            color: #fff !important;
-        }
+  .interest-symbol {
+    font-family: 'DM Mono', monospace;
+    font-size: 17px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    display: block;
+  }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+  .interest-name {
+    font-size: 13px;
+    font-weight: 500;
+  }
 
-        @media (max-width: 600px) {
-            .container { padding: 60px 20px; }
-            .info-grid { grid-template-columns: 1fr; }
-            .links { flex-direction: column; gap: 16px; }
-        }
-    </style>
+  /* ── TERMINAL ── */
+  .terminal {
+    background: var(--term-bg);
+    color: var(--term-text);
+    font-family: 'DM Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.9;
+    padding: 20px 24px 22px;
+  }
+
+  .term-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1e1e1e;
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+
+  .term-title {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--term-muted);
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  .line { display: flex; gap: 10px; }
+  .prompt { color: var(--term-muted); user-select: none; }
+  .output { color: var(--term-muted); padding-left: 22px; }
+  .hl { color: var(--term-green); text-decoration: none; }
+  a.hl:hover { text-decoration: underline; }
+
+  .cursor {
+    display: inline-block;
+    width: 7px;
+    height: 13px;
+    background: var(--term-text);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--term-green);
+    animation: pulse 2s ease infinite;
+    flex-shrink: 0;
+  }
+
+  .status-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── ANIMS ── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.7); opacity: 0.4; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 720px) {
+    .wrapper { grid-template-columns: 1fr; }
+    .left {
+      position: relative;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding: 48px 24px 40px;
+    }
+    .right { padding: 40px 24px 64px; }
+  }
+</style>
 </head>
 <body>
+<div class="wrapper">
 
-    <div class="dots-bg"></div>
+  <aside class="left">
+    <div>
+      <span class="tag">Student &amp; Developer</span>
+      <h1>
+        Nurly
+        <span>Building things<br/>from scratch.</span>
+      </h1>
+      <p class="description">
+        9th-grade student from Almaty, Kazakhstan.
+        Combining school with a deep obsession over
+        web development, code, and the mathematics behind it all.
+      </p>
+      <div class="links">
+        <a class="link-item" href="https://nurlydev.github.io/opentowork/" target="_blank">
+          Open to Work
+          <span class="link-arrow">↗</span>
+        </a>
+        <a class="link-item" href="https://www.instagram.com/kindqazaq/" target="_blank">
+          Instagram
+          <span class="link-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+    <div class="left-bottom">Almaty, KZ · 2025</div>
+  </aside>
 
-    <div class="container">
-        <header>
-            <div class="tag-lab">Student / Developer Profile</div>
-            <h1 id="typewriter"></h1>
-            <p class="description">9th-grade student. Combining school studies with deep exploration of web development and programming.</p>
-        </header>
+  <main class="right">
 
-        <section>
-            <span class="label">About Me</span>
-            <div class="about-text">
-                <p>I am passionate about building digital products and solving complex problems through code. My journey began with curiosity about how websites work and evolved into a daily pursuit of modern technologies. I believe that mathematical thinking and programming are powerful tools capable of changing the world.</p>
-            </div>
-        </section>
-
-        <section>
-            <span class="label">Academic Info</span>
-            <div class="info-grid">
-                <div class="info-item">
-                    <h3>Education</h3>
-                    <p>173 lyceum. 9th grade student.</p>
-                </div>
-                <div class="info-item">
-                    <h3>Currently in</h3>
-                    <p>Almaty, Kazakhstan</p>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <span class="label">Academic Interests</span>
-            <div class="interest-list">
-                 <span class="interest-tag">Math</span>
-                 <span class="interest-tag">Programming</span>
-                 <span class="interest-tag">Web Development</span>
-                <span class="interest-tag">Computer Science</span>
-            </div>
-        </section>
-
-        <section>
-            <span class="label">Personal Terminal</span>
-            <div class="links">
-                <a href="https://nurlydev.github.io/opentowork/" class="work-link">Visit: NurlyDev ↗</a>
-                <a href="https://www.instagram.com/kindqazaq/" target="_blank">Instagram</a>
-            </div>
-        </section>
+    <div class="section">
+      <span class="section-label">About</span>
+      <p>
+        Passionate about building digital products and solving complex problems through code.
+        My journey began with curiosity about how websites work and evolved into a daily pursuit
+        of modern technologies. I believe mathematical thinking and programming are powerful tools
+        capable of changing the world.
+      </p>
     </div>
 
-    <script>
-        const text = "Nurlygazy Omar";
-        const speed = 100;
-        let i = 0;
+    <hr />
 
-        function typeWriter() {
-            if (i < text.length) {
-                document.getElementById("typewriter").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            } else {
-                document.getElementById("typewriter").innerHTML += '<span class="cursor"></span>';
-            }
-        }
+    <div class="section">
+      <span class="section-label">Interests</span>
+      <div class="interests">
+        <div class="interest-cell">
+          <span class="interest-symbol">∑</span>
+          <div class="interest-name">Mathematics</div>
+        </div>
+        <div class="interest-cell">
+          <span class="interest-symbol">&lt;/&gt;</span>
+          <div class="interest-name">Web Development</div>
+        </div>
+        <div class="interest-cell">
+          <span class="interest-symbol">λ</span>
+          <div class="interest-name">Programming</div>
+        </div>
+        <div class="interest-cell">
+          <span class="interest-symbol">⬡</span>
+          <div class="interest-name">Computer Science</div>
+        </div>
+      </div>
+    </div>
 
-        window.onload = typeWriter;
-    </script>
+    <hr />
 
+    <div class="section">
+      <span class="section-label">Terminal</span>
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <span class="term-title">nurly — bash</span>
+        </div>
+
+        <div class="line"><span class="prompt">~$</span><span>whoami</span></div>
+        <div class="output"><span class="hl">nurly</span> · student · developer · almaty</div>
+        <br/>
+        <div class="line"><span class="prompt">~$</span><span>cat education.txt</span></div>
+        <div class="output">Lyceum #173 · Grade 9 · Almaty, Kazakhstan</div>
+        <br/>
+        <div class="line"><span class="prompt">~$</span><span>ls links/</span></div>
+        <div class="output"><a class="hl" href="https://nurlydev.github.io/opentowork/" target="_blank">click/</a></div>
+        <div class="output"><a class="hl" href="https://www.instagram.com/kindqazaq/" target="_blank">instagram/</a></div>
+        <br/>
+        <div class="line"><span class="prompt">~$</span><span class="cursor"></span></div>
+      </div>
+
+      <div class="status-bar">
+        <div class="live-dot"></div>
+        <span class="status-text">Available · Open to work</span>
+      </div>
+    </div>
+
+  </main>
+</div>
 </body>
 </html>
