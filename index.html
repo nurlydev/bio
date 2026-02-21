@@ -1,388 +1,594 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Nurly — Student & Developer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-  :root {
-    --bg: #ffffff;
-    --text: #0a0a0a;
-    --muted: #999999;
-    --border: #e0e0e0;
-    --term-bg: #0a0a0a;
-    --term-text: #ffffff;
-    --term-muted: #666666;
-    --term-green: #22c55e;
-  }
+:root{
+  --bg:#080810;
+  --surface:#0e0e1a;
+  --surface2:#13131f;
+  --border:#1e1e30;
+  --border2:#252538;
+  --text:#e8e8f0;
+  --muted:#6b6b80;
+  --dim:#3a3a50;
+  --accent:#8b5cf6;
+  --accent2:#6366f1;
+  --accent3:#a78bfa;
+  --green:#34d399;
+  --font:'Geist',system-ui,sans-serif;
+  --mono:'Geist Mono',monospace;
+}
 
-  html { scroll-behavior: smooth; }
+html{scroll-behavior:smooth}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-    min-height: 100vh;
-  }
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:15px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-  .wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 100vh;
-  }
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(var(--border) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:48px 48px;
+  opacity:0.35;
+  pointer-events:none;
+  z-index:0;
+}
 
-  /* ── LEFT ── */
-  .left {
-    padding: 64px 56px;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    opacity: 0;
-    animation: fadeIn 0.6s ease 0.05s forwards;
-  }
+.orb{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(80px);
+  pointer-events:none;
+  z-index:0;
+}
+.orb1{width:500px;height:500px;background:rgba(139,92,246,0.12);top:-120px;right:-100px}
+.orb2{width:400px;height:400px;background:rgba(99,102,241,0.08);bottom:-80px;left:-80px}
 
-  .tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 40px;
-    display: block;
-  }
+.wrap{
+  max-width:700px;
+  margin:0 auto;
+  padding:0 28px;
+  position:relative;
+  z-index:1;
+}
 
-  h1 {
-    font-size: clamp(2.2rem, 3.6vw, 3.4rem);
-    font-weight: 500;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 20px;
-  }
+nav{
+  padding:24px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+  opacity:0;
+  animation:up .6s ease forwards;
+}
 
-  h1 span {
-    display: block;
-    color: var(--muted);
-    font-weight: 300;
-  }
+.nav-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:var(--mono);
+  font-size:13px;
+  font-weight:500;
+  color:var(--text);
+  text-decoration:none;
+}
 
-  .description {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.8;
-    max-width: 300px;
-    margin-bottom: 44px;
-  }
+.logo-mark{
+  width:28px;height:28px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:6px;
+  display:grid;
+  place-items:center;
+  font-size:13px;
+  font-weight:600;
+  color:#fff;
+}
 
-  .links { display: flex; flex-direction: column; }
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
 
-  .link-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 0;
-    border-top: 1px solid var(--border);
-    text-decoration: none;
-    color: var(--text);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    transition: padding-left 0.22s ease;
-  }
+.status-pill{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  border:1px solid var(--border2);
+  background:var(--surface);
+  padding:5px 12px;
+  border-radius:100px;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--muted);
+}
 
-  .link-item:last-child { border-bottom: 1px solid var(--border); }
-  .link-item:hover { padding-left: 8px; }
+.status-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 6px var(--green);
+  animation:pulse 2s ease infinite;
+}
 
-  .link-arrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    transition: color 0.2s;
-  }
-  .link-item:hover .link-arrow { color: var(--text); }
+.hero{
+  padding:88px 0 72px;
+  opacity:0;
+  animation:up .7s ease .1s forwards;
+}
 
-  .left-bottom {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-  }
+.hero-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--border2);
+  background:var(--surface);
+  padding:6px 14px;
+  border-radius:100px;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--muted);
+  margin-bottom:28px;
+}
 
-  /* ── RIGHT ── */
-  .right {
-    padding: 64px 56px;
-    display: flex;
-    flex-direction: column;
-    gap: 52px;
-  }
+.eyebrow-dot{
+  width:5px;height:5px;
+  border-radius:50%;
+  background:var(--accent3);
+}
 
-  .right > * {
-    opacity: 0;
-    animation: fadeIn 0.6s ease forwards;
-  }
-  .right > *:nth-child(1) { animation-delay: 0.15s; }
-  .right > *:nth-child(2) { animation-delay: 0.22s; }
-  .right > *:nth-child(3) { animation-delay: 0.30s; }
-  .right > *:nth-child(4) { animation-delay: 0.38s; }
+h1{
+  font-size:clamp(2.2rem,6.5vw,3.6rem);
+  font-weight:600;
+  line-height:1.1;
+  letter-spacing:-0.03em;
+  margin-bottom:20px;
+}
 
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 18px;
-    display: block;
-  }
+.gradient-text{
+  background:linear-gradient(135deg,#fff 30%,var(--accent3),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
 
-  p {
-    font-size: 14px;
-    color: #444;
-    line-height: 1.85;
-  }
+.hero-sub{
+  font-size:1rem;
+  color:var(--muted);
+  max-width:440px;
+  line-height:1.75;
+  margin-bottom:36px;
+}
 
-  hr {
-    border: none;
-    border-top: 1px solid var(--border);
-  }
+.hero-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
 
-  /* ── INTERESTS ── */
-  .interests {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 20px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:500;
+  text-decoration:none;
+  transition:all .2s ease;
+  cursor:pointer;
+  border:none;
+}
 
-  .interest-cell {
-    background: var(--bg);
-    padding: 20px 22px;
-    transition: background 0.18s;
-    cursor: default;
-  }
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  box-shadow:0 0 20px rgba(139,92,246,.25);
+}
 
-  .interest-cell:hover { background: #f8f8f8; }
+.btn-primary:hover{
+  box-shadow:0 0 32px rgba(139,92,246,.4);
+  transform:translateY(-1px);
+}
 
-  .interest-symbol {
-    font-family: 'DM Mono', monospace;
-    font-size: 17px;
-    color: var(--muted);
-    margin-bottom: 5px;
-    display: block;
-  }
+.btn-ghost{
+  background:var(--surface);
+  color:var(--text);
+  border:1px solid var(--border2);
+}
 
-  .interest-name {
-    font-size: 13px;
-    font-weight: 500;
-  }
+.btn-ghost:hover{
+  border-color:var(--dim);
+  background:var(--surface2);
+}
 
-  /* ── TERMINAL ── */
-  .terminal {
-    background: var(--term-bg);
-    color: var(--term-text);
-    font-family: 'DM Mono', monospace;
-    font-size: 12.5px;
-    line-height: 1.9;
-    padding: 20px 24px 22px;
-  }
+.divider{border:none;border-top:1px solid var(--border);margin:0}
 
-  .term-bar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 20px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #1e1e1e;
-  }
+section{
+  padding:56px 0;
+  border-bottom:1px solid var(--border);
+  opacity:0;
+}
 
-  .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot-r { background: #ff5f57; }
-  .dot-y { background: #febc2e; }
-  .dot-g { background: #28c840; }
+section.show{animation:up .6s ease forwards}
 
-  .term-title {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--term-muted);
-    text-transform: uppercase;
-    margin-left: auto;
-  }
+.section-label{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:24px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 
-  .line { display: flex; gap: 10px; }
-  .prompt { color: var(--term-muted); user-select: none; }
-  .output { color: var(--term-muted); padding-left: 22px; }
-  .hl { color: var(--term-green); text-decoration: none; }
-  a.hl:hover { text-decoration: underline; }
+.section-label::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--border);
+}
 
-  .cursor {
-    display: inline-block;
-    width: 7px;
-    height: 13px;
-    background: var(--term-text);
-    vertical-align: text-bottom;
-    animation: blink 1s step-end infinite;
-  }
+/* ── BIO CARD ── */
+.bio-card{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:12px;
+  padding:24px;
+}
 
-  .status-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 14px;
-  }
+.bio-rows{}
 
-  .live-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--term-green);
-    animation: pulse 2s ease infinite;
-    flex-shrink: 0;
-  }
+.bio-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+  font-size:0.9rem;
+}
 
-  .status-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+.bio-row:first-child{padding-top:0}
+.bio-row:last-child{border-bottom:none;padding-bottom:0}
 
-  /* ── ANIMS ── */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+.bio-key{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:.06em;
+  width:110px;
+  flex-shrink:0;
+}
 
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
+.bio-val{color:var(--text)}
 
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(0.7); opacity: 0.4; }
-  }
+.badge{
+  display:inline-block;
+  background:rgba(139,92,246,.15);
+  border:1px solid rgba(139,92,246,.3);
+  color:var(--accent3);
+  font-family:var(--mono);
+  font-size:10px;
+  padding:2px 8px;
+  border-radius:4px;
+}
 
-  /* ── MOBILE ── */
-  @media (max-width: 720px) {
-    .wrapper { grid-template-columns: 1fr; }
-    .left {
-      position: relative;
-      height: auto;
-      border-right: none;
-      border-bottom: 1px solid var(--border);
-      padding: 48px 24px 40px;
-    }
-    .right { padding: 40px 24px 64px; }
-  }
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+
+.tag{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.04em;
+  border:1px solid var(--border2);
+  background:var(--surface);
+  color:var(--muted);
+  padding:7px 14px;
+  border-radius:6px;
+  transition:all .2s ease;
+  cursor:default;
+}
+
+.tag:hover{
+  border-color:var(--accent);
+  color:var(--accent3);
+  background:rgba(139,92,246,.08);
+}
+
+.terminal{
+  background:#050508;
+  border:1px solid var(--border2);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 0 0 1px rgba(139,92,246,.05), 0 20px 60px rgba(0,0,0,.5);
+}
+
+.term-bar{
+  background:#0a0a12;
+  border-bottom:1px solid var(--border);
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.tb{width:12px;height:12px;border-radius:50%}
+.tb1{background:#ff5f57}
+.tb2{background:#febc2e}
+.tb3{background:#28c840}
+
+.term-title{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--dim);
+  margin:0 auto;
+  letter-spacing:.06em;
+}
+
+.term-body{
+  padding:24px 20px 28px;
+  font-family:var(--mono);
+  font-size:12.5px;
+  line-height:2;
+}
+
+.tl{display:flex;gap:10px;align-items:baseline}
+.tp{color:var(--accent);user-select:none}
+.tc{color:var(--text)}
+.to{color:var(--muted);padding-left:22px;display:block}
+.tk{color:var(--accent3)}
+.tv{color:#e879f9}
+.tg{height:4px}
+.ta{color:var(--green);text-decoration:none}
+.ta:hover{text-decoration:underline}
+
+.cursor{
+  display:inline-block;
+  width:8px;height:15px;
+  background:var(--accent3);
+  vertical-align:middle;
+  border-radius:1px;
+  animation:blink 1s step-end infinite;
+  margin-left:1px;
+}
+
+.cg{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.ci{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  text-decoration:none;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  padding:18px 20px;
+  color:var(--text);
+  transition:all .2s ease;
+}
+
+.ci:hover{
+  border-color:var(--accent);
+  background:rgba(139,92,246,.06);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+}
+
+.ci-name{font-size:.88rem;font-weight:500;margin-bottom:2px}
+
+.ci-handle{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--muted);
+  transition:color .2s;
+}
+
+.ci:hover .ci-handle{color:var(--accent3)}
+
+.ci-arrow{
+  font-size:18px;
+  color:var(--dim);
+  transition:color .2s, transform .2s;
+}
+
+.ci:hover .ci-arrow{color:var(--accent3);transform:translate(2px,-2px)}
+
+footer{
+  padding:32px 0 52px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:.06em;
+}
+
+@keyframes up{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes blink{
+  0%,100%{opacity:1}50%{opacity:0}
+}
+
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.5;transform:scale(.8)}
+}
+
+@media(max-width:540px){
+  .wrap{padding:0 18px}
+  h1{font-size:2rem}
+  .cg{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:8px;align-items:flex-start}
+  .hero-actions{flex-direction:column}
+  .btn{justify-content:center}
+}
 </style>
 </head>
 <body>
-<div class="wrapper">
 
-  <aside class="left">
-    <div>
-      <span class="tag">Student &amp; Developer</span>
-      <h1>
-        Nurly
-        <span>Building things<br/>from scratch.</span>
-      </h1>
-      <p class="description">
-        9th-grade student from Almaty, Kazakhstan.
-        Combining school with a deep obsession over
-        web development, code, and the mathematics behind it all.
-      </p>
-      <div class="links">
-        <a class="link-item" href="https://nurlydev.github.io/opentowork/" target="_blank">
-          Open to Work
-          <span class="link-arrow">↗</span>
-        </a>
-        <a class="link-item" href="https://www.instagram.com/kindqazaq/" target="_blank">
-          Instagram
-          <span class="link-arrow">↗</span>
-        </a>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<div class="wrap">
+
+  <nav>
+    <a class="nav-logo" href="#">
+      <div class="logo-mark">N</div>
+      nurly
+    </a>
+    <div class="nav-right">
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        open to work
       </div>
     </div>
-    <div class="left-bottom">Almaty, KZ · 2025</div>
-  </aside>
+  </nav>
 
-  <main class="right">
-
-    <div class="section">
-      <span class="section-label">About</span>
-      <p>
-        Passionate about building digital products and solving complex problems through code.
-        My journey began with curiosity about how websites work and evolved into a daily pursuit
-        of modern technologies. I believe mathematical thinking and programming are powerful tools
-        capable of changing the world.
-      </p>
+  <div class="hero">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-dot"></span>
+      Student · Developer · Almaty, KZ
     </div>
+    <h1>Building the future<br><span class="gradient-text">one line at a time.</span></h1>
+    <p class="hero-sub">
+      9th-grade student at Lyceum #173 combining school with deep exploration
+      of web development and programming. Mathematical thinking + code = change.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://nurlydev.github.io/opentowork/" target="_blank">↗ View projects</a>
+      <a class="btn btn-ghost" href="https://t.me/nurlydev" target="_blank">Telegram</a>
+      <a class="btn btn-ghost" href="https://www.instagram.com/kindqazaq/" target="_blank">Instagram</a>
+    </div>
+  </div>
 
-    <hr />
+  <div class="divider"></div>
 
-    <div class="section">
-      <span class="section-label">Interests</span>
-      <div class="interests">
-        <div class="interest-cell">
-          <span class="interest-symbol">∑</span>
-          <div class="interest-name">Mathematics</div>
+  <section id="about">
+    <div class="section-label">About</div>
+    <div class="bio-card">
+      <div class="bio-rows">
+        <div class="bio-row">
+          <span class="bio-key">name</span>
+          <span class="bio-val">Nurly</span>
         </div>
-        <div class="interest-cell">
-          <span class="interest-symbol">&lt;/&gt;</span>
-          <div class="interest-name">Web Development</div>
+        <div class="bio-row">
+          <span class="bio-key">school</span>
+          <span class="bio-val">Lyceum #173 · 9th Grade</span>
         </div>
-        <div class="interest-cell">
-          <span class="interest-symbol">λ</span>
-          <div class="interest-name">Programming</div>
+        <div class="bio-row">
+          <span class="bio-key">location</span>
+          <span class="bio-val">Almaty, Kazakhstan</span>
         </div>
-        <div class="interest-cell">
-          <span class="interest-symbol">⬡</span>
-          <div class="interest-name">Computer Science</div>
+        <div class="bio-row">
+          <span class="bio-key">status</span>
+          <span class="bio-val"><span class="badge">open to work</span></span>
         </div>
       </div>
     </div>
+  </section>
 
-    <hr />
+  <section id="interests">
+    <div class="section-label">Interests</div>
+    <div class="tags">
+      <div class="tag">Mathematics</div>
+      <div class="tag">Web Development</div>
+      <div class="tag">Programming</div>
+      <div class="tag">Computer Science</div>
+    </div>
+  </section>
 
-    <div class="section">
-      <span class="section-label">Terminal</span>
-      <div class="terminal">
-        <div class="term-bar">
-          <div class="dot dot-r"></div>
-          <div class="dot dot-y"></div>
-          <div class="dot dot-g"></div>
-          <span class="term-title">nurly — bash</span>
-        </div>
-
-        <div class="line"><span class="prompt">~$</span><span>whoami</span></div>
-        <div class="output"><span class="hl">nurly</span> · student · developer · almaty</div>
-        <br/>
-        <div class="line"><span class="prompt">~$</span><span>cat education.txt</span></div>
-        <div class="output">Lyceum #173 · Grade 9 · Almaty, Kazakhstan</div>
-        <br/>
-        <div class="line"><span class="prompt">~$</span><span>ls links/</span></div>
-        <div class="output"><a class="hl" href="https://nurlydev.github.io/opentowork/" target="_blank">click/</a></div>
-        <div class="output"><a class="hl" href="https://www.instagram.com/kindqazaq/" target="_blank">instagram/</a></div>
-        <br/>
-        <div class="line"><span class="prompt">~$</span><span class="cursor"></span></div>
+  <section id="terminal">
+    <div class="section-label">Terminal</div>
+    <div class="terminal">
+      <div class="term-bar">
+        <div class="tb tb1"></div>
+        <div class="tb tb2"></div>
+        <div class="tb tb3"></div>
+        <span class="term-title">nurly@dev — bash</span>
       </div>
+      <div class="term-body">
+        <div class="tl"><span class="tp">~/</span><span class="tc">whoami</span></div>
+        <span class="to">Nurly · 9th grade student &amp; web developer · Almaty, KZ</span>
+        <div class="tg"></div>
 
-      <div class="status-bar">
-        <div class="live-dot"></div>
-        <span class="status-text">Available · Open to work</span>
+        <div class="tl"><span class="tp">~/</span><span class="tc">cat interests.json</span></div>
+        <span class="to">{ <span class="tk">"stack"</span>: <span class="tv">"math, web, code, cs"</span> }</span>
+        <div class="tg"></div>
+
+        <div class="tl"><span class="tp">~/</span><span class="tc">env | grep STATUS</span></div>
+        <span class="to"><span class="tk">OPEN_TO_WORK</span>=<span class="tv">true</span></span>
+        <div class="tg"></div>
+
+        <div class="tl"><span class="tp">~/</span><span class="tc">ls links/</span></div>
+        <span class="to">→ <a class="ta" href="https://nurlydev.github.io/opentowork/" target="_blank">nurlydev.github.io/opentowork</a></span>
+        <span class="to">→ <a class="ta" href="https://www.instagram.com/kindqazaq/" target="_blank">instagram.com/kindqazaq</a></span>
+        <div class="tg"></div>
+
+        <div class="tl"><span class="tp">~/</span><span class="cursor"></span></div>
       </div>
     </div>
+  </section>
 
-  </main>
+  <section id="contact" style="border-bottom:none;padding-bottom:0">
+    <div class="section-label">Find me</div>
+    <div class="cg">
+      <a class="ci" href="https://nurlydev.github.io/opentowork/" target="_blank">
+        <div>
+          <div class="ci-name">Portfolio</div>
+          <div class="ci-handle">nurlydev.github.io</div>
+        </div>
+        <span class="ci-arrow">↗</span>
+      </a>
+      <a class="ci" href="https://www.instagram.com/kindqazaq/" target="_blank">
+        <div>
+          <div class="ci-name">Instagram</div>
+          <div class="ci-handle">@kindqazaq</div>
+        </div>
+        <span class="ci-arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Nurly © 2025</span>
+    <span>Student · Developer · Almaty</span>
+  </footer>
+
 </div>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('section').forEach(s => io.observe(s));
+</script>
 </body>
 </html>
